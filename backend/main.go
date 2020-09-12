@@ -1,41 +1,26 @@
 package main
 
 import (
-        "log"
-        "context"
+	"context"
+	"fyndguru-hackathon/backend/api_handlers"
 
-        "github.com/aws/aws-lambda-go/events"
-        "github.com/aws/aws-lambda-go/lambda"
-        "github.com/awslabs/aws-lambda-go-api-proxy/gin"
-        "github.com/gin-gonic/gin"
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/awslabs/aws-lambda-go-api-proxy/gin"
 )
 
 var ginLambda *ginadapter.GinLambda
 
 func init() {
-        // stdout and stderr are sent to AWS CloudWatch Logs
-        log.Printf("Gin cold start")
-        r := gin.Default()
-        r.GET("/ping", func(c *gin.Context) {
-                c.JSON(200, gin.H{
-                        "message": "pong",
-                })
-        })
-
-        r.GET("/health", func(c *gin.Context) {
-                c.JSON(200, gin.H{
-                        "message": "health",
-                })
-        })
-
-        ginLambda = ginadapter.New(r)
+	r := api_handlers.InitApis()
+	ginLambda = ginadapter.New(r)
 }
 
 func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-        // If no name is provided in the HTTP request body, throw an error
-        return ginLambda.ProxyWithContext(ctx, req)
+	// If no name is provided in the HTTP request body, throw an error
+	return ginLambda.ProxyWithContext(ctx, req)
 }
 
 func main() {
-        lambda.Start(Handler)
+	lambda.Start(Handler)
 }
