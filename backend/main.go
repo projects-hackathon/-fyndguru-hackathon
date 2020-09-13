@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fyndguru-hackathon/backend/api_handlers"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -12,6 +13,7 @@ import (
 var ginLambda *ginadapter.GinLambda
 
 func init() {
+	os.Setenv("ACCESS_SECRET", "adminpass")
 	r := api_handlers.InitApis()
 	ginLambda = ginadapter.New(r)
 }
