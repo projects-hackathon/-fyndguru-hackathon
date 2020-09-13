@@ -4,34 +4,40 @@ Transform: AWS::Serverless-2016-10-31
 Description: An example serverless API and worker written in Golang.
 
 Resources:
-  ApiResource:
-    Type: AWS::Serverless::Api
-    Tags:
-      username: TestUser
-      Application: fyndguru
-    Properties:
-      StageName: prod
+  ApiResource:
+    Type: AWS::Serverless::Api
+    Tags:
+      username: TestUser
+      Application: fyndguru
+    Properties:
+      StageName: prod
 
-  Api:
-    Type: AWS::Serverless::Function
-    Properties:
-      Runtime: go1.x
-      Handler: api
-      Timeout: 10
-      Events:
-        PingHandler:
-          Type: Api
-          Properties:
-            Path: '/ping'
-            Method: get
-            RestApiId: !Ref ApiResource
-        HealthHandler:
-          Type: Api
-          Properties:
-            Path: '/health'
-            Method: get
-            RestApiId: !Ref ApiResource
+  Api:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: go1.x
+      Handler: api
+      Timeout: 10
+      Events:
+        PingHandler:
+          Type: Api
+          Properties:
+            Path: '/ping'
+            Method: get
+            RestApiId: !Ref ApiResource
+        HealthHandler:
+          Type: Api
+          Properties:
+            Path: '/health'
+            Method: get
+            RestApiId: !Ref ApiResource
+        UserRegistrationHandler:
+          Type: Api
+          Properties:
+            Path: '/user/register'
+            Method: post
+            RestApiId: !Ref ApiResource
 
 Outputs:
-  Endpoint:
-    Value: !Sub "https://${ApiResource}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  Endpoint:
+    Value: !Sub "https://${ApiResource}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

@@ -7,6 +7,7 @@ import (
 	"fyndguru-hackathon/backend/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/prometheus/common/log"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"net/http"
@@ -33,12 +34,20 @@ func EmployerRegister(c *gin.Context) {
 }
 
 func verifyRegistration(c *gin.Context, loginCollection *mongo.Collection, u models.UserRegistration) {
+
+	log.Info("Before mongo call")
+
+
+
 	cursor, err := loginCollection.Find(
 		context.Background(),
 		bson.D{{"userName", u.Username}},
 	)
 
+	log.Info("After mongo call")
+
 	if err != nil {
+		log.Error("Error while finding userName:", err)
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
