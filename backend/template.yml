@@ -37,6 +37,24 @@ Resources:
             Path: '/user/register'
             Method: post
             RestApiId: !Ref ApiResource
+        UserLoginHandler:
+          Type: Api
+          Properties:
+            Path: '/user/login'
+            Method: post
+            RestApiId: !Ref ApiResource
+        EmployerLoginHandler:
+          Type: Api
+          Properties:
+            Path: '/employer/login'
+            Method: post
+            RestApiId: !Ref ApiResource
+        EmployerRegistrationHandler:
+          Type: Api
+          Properties:
+            Path: '/employer/register'
+            Method: post
+            RestApiId: !Ref ApiResource
 
 Outputs:
   Endpoint:
