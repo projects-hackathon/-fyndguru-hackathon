@@ -17,7 +17,7 @@ func init() {
 
 	//client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://192.168.43.41:27017"))
 
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://adminpass:adminpass@cluster0.d1egb.mongodb.net/fyndguru?retryWrites=true&w=majority"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://adminuser:adminpass@cluster0.d1egb.mongodb.net"))
 
 	if err != nil {
 		log.Fatalln(err)
